@@ -18,7 +18,7 @@ else {
 ?>
 <html>
 <head>
-	<title>Welcome to Swirlfeed</title>
+	<title>Welcome to Reliant</title>
 
 	<!-- Javascript -->
 	
@@ -42,7 +42,7 @@ else {
 	<div class="top_bar"> 
 
 		<div class="logo">
-			<a href="index.php">Swirlfeed!</a>
+			<a href="index.php">Reliant!</a>
 		</div>
 
 
