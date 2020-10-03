@@ -1,6 +1,13 @@
 <?php 
 include("includes/header.php");
 
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+}
+else {
+    $id= 0;
+}
+
 $message_obj = new Message($con, $userLoggedIn);
 if(isset($_GET['profile_username'])) {
 	$username = $_GET['profile_username'];
@@ -9,7 +16,6 @@ if(isset($_GET['profile_username'])) {
 
 	$num_friends = (substr_count($user_array['friend_array'], ",")) - 1;
 }
-
 
 
 if(isset($_POST['remove_friend'])) {
@@ -39,6 +45,8 @@ if(isset($_POST['post_message'])) {
 			});
 		  </script>";
 }
+
+
 
  ?>
 
@@ -116,7 +124,6 @@ if(isset($_POST['post_message'])) {
 			
 			<div role="tabpanel" class="tab-pane fade" id="messages_div">
 				<?php
-				
 					echo "<h4>You and <a href='" . $username ."'>" . $profile_user_obj->getFirstAndLastName() . "</a></h4><hr><br>";
 					echo "<div class='loaded_messages' id='scroll_messages'> ";
 						echo $message_obj->getMessages($username);
@@ -131,8 +138,10 @@ if(isset($_POST['post_message'])) {
 				</div>
 	
 				<script>
-					var div = document.getElementById("scroll_messages");
-					div.scrollTop = div.scrollHeight;
+					$('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+						var div = document.getElementById("scroll_messages");
+						div.scrollTop = div.scrollHeight;
+					});
 				</script>
 			</div>
 			
@@ -142,26 +151,53 @@ if(isset($_POST['post_message'])) {
 
 	<!-- Modal -->
 	<div class="modal fade" id="post_form" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<!-- <div class="modal-dialog" role="document">
+			<div class="modal-content">
 
-		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Post something!</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		<div class="modal-body">
-			<p>This will appear on the user's profile page and also their newsfeed for your friends to see!</p>
+			<div class="modal-header">
+				
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">
+					&times;
+				</span>
+				</button>
+				<h5 class="modal-title" id="postModalLabel">Post something!</h5>
+			</div>
+			<div class="modal-body">
+				<p>This will appear on the user's profile page and also their newsfeed for your friends to see!</p>
 
-			<form class="profile_post" action="" method="POST">
-			 	<div class="form-group">
-			 		<textarea name="post_body" class="form-control"></textarea>
-					<input type="hidden" name="user_from" value="<?php echo $userLoggedIn; ?>">
-					<input type="hidden" name="user_to" value="<?php echo $username; ?>">
-				</div>
-			</form>
-		</div>
+				<form class="profile_post" action="" method="POST">
+					<div class="form-group">
+						<textarea name="post_body" class="form-control"></textarea>
+						<input type="hidden" name="user_from" value="<?php //echo $userLoggedIn; ?>">
+						<input type="hidden" name="user_to" value="<?php //echo $username; ?>">
+					</div>
+				</form>
+			</div> -->
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">
+					&times;
+				</span>
+				</button>
+				<h4 class="modal-title" id="postModalLabel">Post something!</h4>
+			</div>
+
+			<div class="modal-body">
+				<p>This will appear on the user's profile page and also their newsfeed for your friends to see!</p>
+
+				<form class="profile_post" action="" method="POST">
+					<div class="form-group">
+						<textarea class="form-control" name="post_body"></textarea>
+						<input type="hidden" name="user_from" value="<?php echo $userLoggedIn; ?>">
+						<input type="hidden" name="user_to" value="<?php echo $username; ?>">
+					</div>
+				</form>
+			</div>
+
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
 			<button type="button" class="btn btn-primary" name="post_button" id="submit_profile_post">Post</button>
@@ -230,3 +266,4 @@ if(isset($_POST['post_message'])) {
 	</div>
 </body>
 </html>
+

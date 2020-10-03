@@ -71,7 +71,6 @@ if (isset($_POST['post_message'])) {
             else {
                 echo "<textarea name='message_body' id='message_textarea' placeholder='Write your message ...'></textarea>";
                 echo "<input type='submit' name='post_message' class='info' id='message_submit' value='Send'>";
-                
             }?>
         </form>
     </div>
@@ -80,16 +79,27 @@ if (isset($_POST['post_message'])) {
         
         var div = document.getElementById("scroll_messages");
         div.scrollTop = div.scrollHeight;
-        setInterval(function(){
-            document.getElementById("scroll_messages").reset;
-        }, 1000);
-        // LoadChat();
-        // function LoadChat() {
-        //     $.post(function (response){
-        //         $('#scroll_messages').html(response);
-                
-        //     })
-        // }
+        // setInterval(function(){
+        //     document.getElementById("scroll_messages").reset;
+        // }, 1000);
+        
+        $('#message_submit').on('click', function(result) {
+            
+
+                $.post("", {result:result});
+
+                if(result)
+                document.getElementById("scroll_messages").reload();
+            
+        });
+
+            //document.getElementById("scroll_messages").reset(1000);
+        
+
+        // ----Ở ĐÂY LÀ CHỖ LÀM KHÔNG BỊ LẶP DỮ LIỆU
+			if ( window.history.replaceState ) {
+				window.history.replaceState( null, null, window.location.href );
+			  }
 
     </script>
 
@@ -97,10 +107,10 @@ if (isset($_POST['post_message'])) {
 
 </div>
 <div class="user_details column" id="conversations">
-        <h4>Conversations</h4>
-        <div class="loaded_conversations">
-            <?php echo $message_obj->getConvos(); ?>
-        </div>
-        <br>
-        <a href="messages.php?u=new">New Message</a>
+    <h4>Conversations</h4>
+    <div class="loaded_conversations">
+        <?php echo $message_obj->getConvos(); ?>
     </div>
+    <br>
+    <a href="messages.php?u=new">New Message</a>
+</div>

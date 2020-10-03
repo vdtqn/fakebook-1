@@ -11,15 +11,15 @@ if(mysqli_connect_errno())
 	echo "Failed to connect: " . mysqli_connect_errno();
 }
 
-	$dbhost = 'localhost';
-	$dbuser = 'root';
-	$dbname = 'social';
-	$dbpass = '';
+	// $dbhost = 'localhost';
+	// $dbuser = 'root';
+	// $dbname = 'social';
+	// $dbpass = '';
 
-	try {
-		$db =new PDO("mysql: dbhost=$dbhost; dbname=$dbname", "$dbuser", "$dbpass");
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
+	// try {
+	// 	$db =new PDO("mysql: dbhost=$dbhost; dbname=$dbname", "$dbuser", "$dbpass");
+	// } catch (PDOException $e) {
+	// 	echo $e->getMessage();
+	// }
 
 ?>

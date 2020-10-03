@@ -12,22 +12,40 @@ class Post {
 		
 		$body = strip_tags($body); //removes html tags 
 		$body = mysqli_real_escape_string($this->con, $body);
-		$check_empty = preg_replace('/\s+/', '', $body); //Deltes all spaces 
+		$body = str_replace('\r\n', "\n", $body);
+		$body = nl2br($body);
+		$check_empty = preg_replace('/\s+/', '', $body); //Deltes all spaces
 	
       
 		if($check_empty != "") {
 
+			// $body_array = preg_split("/\s+/", $body);
+
+			// foreach ($body_array as $key => $value) {
+
+			// 	if (strpos($value, "www.youtube.com/watch?v=") !== false) {
+					
+			// 		$link = preg_split("!&!", $value);
+			// 		$value = preg_replace("!watch\?v=!", "embed/", $link[0]);
+			// 		$value = "<br><iframe width=\'420\' height=\'315\' src=\ '" . $value ."\' ></iframe><br>";
+			// 		$body_array[$key] = $value;
+			// 	}
+			// }
+			// $body = implode(" ", $body_array);
+
 			$body_array = preg_split("/\s+/", $body);
 
-			foreach ($body_array as $key => $value) {
+			foreach($body_array as $key => $value) {
 
-				if (strpos($value, "www.youtube.com/watch?v=") !== false) {
-					
+				if(strpos($value, "www.youtube.com/watch?v=") !== false) {
+
 					$link = preg_split("!&!", $value);
 					$value = preg_replace("!watch\?v=!", "embed/", $link[0]);
-					$value = "<br><iframe width=\'420\' height=\'315\' src=\ '" . $value ."\' ></iframe><br>";
+					$value = "<br><iframe width=\'420\' height=\'315\' src=\'" . $value ."\'></iframe><br>";
 					$body_array[$key] = $value;
+
 				}
+
 			}
 			$body = implode(" ", $body_array);
 
@@ -386,6 +404,7 @@ class Post {
 				$body = $row['body'];
 				$added_by = $row['added_by'];
 				$date_time = $row['date_added'];
+				$imagePath = $row['image'];
 
 				if($num_iterations++ < $start)
 					continue; 
@@ -496,6 +515,15 @@ class Post {
 					}
 				}
 
+				if ($imagePath != "") {
+					$imageDiv = "<div class='postedImage'>
+									<img src='$imagePath'>
+								</div>";
+				}
+				else {
+					$imageDiv = "";
+				}
+
 				$str .= "<div class='status_post' onClick='javascript:toggle$id()'>
 							<div class='post_profile_pic'>
 								<img src='$profile_pic' width='50'>
@@ -508,6 +536,7 @@ class Post {
 							<div id='post_body'>
 								$body
 								<br>
+								$imageDiv
 								<br>
 								<br>
 							</div>
@@ -699,6 +728,7 @@ class Post {
 								<div id='post_body'>
 									$body
 									<br>
+									
 									<br>
 									<br>
 								</div>

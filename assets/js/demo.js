@@ -30,8 +30,8 @@ $(document).ready(function() {
 });
 
 $(document).click(function(e) {
-	if(e.target.class != "search_results" && e.target.id != "search_text_target") {
-		$(".search_results").html(data);
+	if(e.target.class != "search_results" && e.target.id != "search_text_input") {
+		$(".search_results").html("");
 		$('.search_results_footer').html("");
 		$('.search_results_footer').toggleClass("search_results_footer_empty");
 		$('.search_results_footer').toggleClass("search_results_footer");

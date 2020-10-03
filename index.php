@@ -39,6 +39,7 @@
 		if($uploadOk) {
 			$post = new Post($con, $userLoggedIn);
 			$post->submitPost($_POST['post_text'], 'none', $imageName);
+			
 		}
 		else {
 			echo "<div style='text-align:center;' class='alert alert-danger'>
@@ -71,9 +72,10 @@
 
 	<div class="main_column column">
 		<form class="post_form" action="index.php" method="POST" enctype="multipart/form-data">
-		<input type="file" name="fileToUpload" id="fileToUpload">
+		
 			<textarea name="post_text" id="post_text" placeholder="Got something to say?"></textarea>
 			<input type="submit" name="post" id="post_button" value="Post">
+			<input type="file" name="fileToUpload" id="fileToUpload">
 			<hr>
 
 		</form>
@@ -155,6 +157,16 @@
 
 			}); //End (window).scroll(function())
 
+
+
+
+
+
+			
+			// ----Ở ĐÂY LÀ CHỖ LÀM KHÔNG BỊ LẶP DỮ LIỆU
+			if ( window.history.replaceState ) {
+				window.history.replaceState( null, null, window.location.href );
+			  }
 
 		});
 

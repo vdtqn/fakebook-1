@@ -33,10 +33,18 @@ class Message {
         if ($body != "") {
             $userLoggedIn = $this->user_obj->getUsername();
             $query = mysqli_query($this->con, "INSERT INTO messages VALUES('', '$user_to', '$userLoggedIn', '$body', '$date', 'no', 'no', 'no')");
+            ?>
 
-            if ($query == true) {
-                $run = 1;
-            }
+            <!-- <script>
+                $(document).ready(function() {
+
+                    location.reload(1000);
+                        
+                    
+                });
+            </script> -->
+
+            <?php
         } 
     }
 
@@ -52,9 +60,11 @@ class Message {
             $user_to = $row['user_to'];
             $user_from = $row['user_from'];
             $body = $row['body'];
+            $id = $row['id'];
 
-            $div_top = ($user_to == $userLoggedIn) ? "<div class='message' id='green'>" : "<div class='message' id='blue'>" ;
-            $data = $data . $div_top . $body . "</div><br><br>";
+            $div_top = ($user_to == $userLoggedIn) ? "<div class='message' id='green'>" : "<div class='message' id='blue'>";
+			//$button = "<span class='deleteButton' onclick='deleteMessage($id, this)'>X</span>";
+			$data = $data . $div_top /*. $button*/ . $body . "</div><br><br>";
         }
         return $data;
 
